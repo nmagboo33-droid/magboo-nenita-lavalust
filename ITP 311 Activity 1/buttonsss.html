@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Event Handlers Demo</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            padding: 2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            background: #fafafa;
+        }
+        h2 {
+            margin-top: 2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        hr {
+            margin: 2rem 0;
+            border: 0;
+            border-top: 1px solid #ddd;
+        }
+        .btn-group {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin: 0.5rem 0;
+        }
+        button {
+            padding: 0.5rem 1.25rem;
+            font-size: 1rem;
+            border: 1px solid #aaa;
+            border-radius: 4px;
+            background: #fff;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        button:hover {
+            background: #f0f0f0;
+        }
+        .parent-box {
+            border: 2px solid #333;
+            padding: 1.5rem 2rem;
+            margin-top: 0.5rem;
+            display: inline-block;
+            background: #f7f7f7;
+        }
+        .parent-box button {
+            margin-top: 0.75rem;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <!--1. basic event -->
+    <h2>Basic Event Handlers</h2>
+    <div class="btn-group">
+        <button id="btnClick">Click Me</button>
+        <button id="btnHover">Hover Over Me</button>
+        <button id="btnDblClick">Double Click Me</button>
+    </div>
+
+    <hr />
+
+    <!--2. custom event -->
+    <h2>Custom Event</h2>
+    <button id="btnCustom">Trigger Custom Event</button>
+
+    <hr />
+
+    <!--3. event bubbling and capturing -->
+    <h2>Event Bubbling and Capturing</h2>
+    <div class="parent-box" id="parentDiv">
+        Parent Div
+        <button id="childBtn">Child Button</button>
+    </div>
+
+    <script>
+
+        //basic event handlers
+
+        // Button 1: click to alert
+        document.getElementById('btnClick').addEventListener('click', function() {
+            alert('Button clicked!');
+        });
+
+        // Button 2: mouseover 
+        document.getElementById('btnHover').addEventListener('mouseover', function(e) {
+            console.log('Mouse is over me!');
+        });
+
+        // Button 3: dblclick → alert 
+        document.getElementById('btnDblClick').addEventListener('dblclick', function() {
+            alert('Double clicked!');
+        });
+
+
+
+        <!--2.Custom event -->
+        const btnCustom = document.getElementById('btnCustom');
+
+        // Listen for the custom event helloEvent
+        btnCustom.addEventListener('helloEvent', function() {
+            console.log('Custom helloEvent triggered!');
+        });
+
+        // dispatch the custom event
+        btnCustom.addEventListener('click', function() {
+            const event = new Event('helloEvent');
+            this.dispatchEvent(event);
+        });
+
+
+        
+        const parent = document.getElementById('parentDiv');
+        const child = document.getElementById('childBtn');
+
+        // Parent: uses capture: true → fires during CAPTURING phase (top → down)
+        parent.addEventListener('click', function() {
+            console.log('Parent (capture phase) – triggered FIRST');
+        }, { capture: true });
+
+        // Child: uses capture: false → fires during BUBBLING phase (bottom → up)
+        child.addEventListener('click', function() {
+            console.log('Child (bubbling phase) – triggered SECOND');
+        }, { capture: false });
+
+        console.log('now ready!');
+    </script>
+</body>
+</html>
