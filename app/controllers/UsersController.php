@@ -7,8 +7,8 @@ class UsersController extends Controller
     {
         parent::__construct();
 
-        $this->call->database();
-        $this->call->model('UserModel');
+       $this->call->database();
+       $this->call->model('ProductModel');
     }
 
     public function index()
@@ -18,3 +18,4 @@ class UsersController extends Controller
         $this->call->view('user', $data);
     }
 }
+//$this->call->view('user', $data);
