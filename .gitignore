@@ -13,6 +13,7 @@ composer.lock
 # Cache & Logs
 runtime/*
 !runtime/.htaccess
+
 !runtime/index.html
 *.log
 *.cache
